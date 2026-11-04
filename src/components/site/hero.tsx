@@ -77,11 +77,12 @@ export function Hero() {
         >
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
             <Sparkles className="size-4" aria-hidden="true" />
-            سلام، من هستم
+            سلام، من
           </span>
 
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            {profile.name}
+            <span className="text-primary">#</span>
+            {profile.name.replace(/ /g, "_")}
           </h1>
 
           <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 text-xl font-bold sm:text-2xl lg:justify-start">
