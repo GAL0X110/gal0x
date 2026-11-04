@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { profile } from "@/config/profile";
 
 /**
@@ -23,7 +24,14 @@ export function ToolsMarquee() {
                 <span className="font-display text-sm font-semibold uppercase tracking-[0.35em] text-muted-foreground">
                   {tool}
                 </span>
-                <span className="text-sm text-primary">✦</span>
+                <Image
+                  src="/images/galaxy.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={340}
+                  height={340}
+                  className="size-5 select-none mix-blend-screen"
+                />
               </li>
             ))}
           </ul>

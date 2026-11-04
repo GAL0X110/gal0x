@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { ArrowUp, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -44,8 +45,17 @@ export function Footer() {
 
   return (
     <>
-      <footer className="mt-auto border-t bg-muted/40">
-        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <footer className="relative mt-auto overflow-hidden border-t bg-muted/40">
+        {/* کهکشان برند در پس‌زمینه‌ی فوتر */}
+        <Image
+          src="/images/galaxy.png"
+          alt=""
+          aria-hidden="true"
+          width={340}
+          height={340}
+          className="spin-galaxy pointer-events-none absolute -bottom-24 -start-24 size-72 select-none opacity-30 mix-blend-screen sm:size-96"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 py-10 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center gap-2.5">
               <BrandMark />
