@@ -73,6 +73,12 @@ export const profile = {
   /* ─── تصاویر ─── */
   /** عکس پروفایل؛ فایل عکس خودتان را در پوشه public/images بگذارید و مسیرش را اینجا بنویسید */
   avatar: "/images/avatar.png",
+  /**
+   * لوگوی برند شما (در نوبار، فوتر و favicon استفاده می‌شود).
+   * فایل لوگو را در public/images بگذارید (مثلاً logo.png) و اینجا "/images/logo.png" بنویسید.
+   * اگر خالی بماند، حروف اول نام (initials) نمایش داده می‌شود.
+   */
+  logo: "",
 
   /* ─── تماس و وضعیت ─── */
   email: "you@example.com",

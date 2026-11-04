@@ -11,6 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
+import { BrandMark } from "./brand-mark";
 import { ThemeToggle } from "./theme-toggle";
 import { profile } from "@/config/profile";
 import { cn } from "@/lib/utils";
@@ -69,9 +70,7 @@ export function Navbar() {
           className="flex items-center gap-2.5"
           aria-label={`رفتن به بالای صفحه - ${profile.name}`}
         >
-          <span className="flex size-9 items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground shadow-sm">
-            {profile.initials}
-          </span>
+          <BrandMark />
           <span className="text-lg font-bold">{profile.name}</span>
         </a>
 

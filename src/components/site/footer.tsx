@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowUp, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { BrandMark } from "./brand-mark";
 import { SocialIcon } from "./social-icon";
 import { profile } from "@/config/profile";
 import { cn } from "@/lib/utils";
@@ -47,9 +48,7 @@ export function Footer() {
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center gap-2.5">
-              <span className="flex size-9 items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground">
-                {profile.initials}
-              </span>
+              <BrandMark />
               <div>
                 <p className="font-bold">{profile.name}</p>
                 <p className="text-xs text-muted-foreground">{profile.role}</p>

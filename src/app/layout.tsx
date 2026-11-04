@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: profile.fullName }],
   icons: {
-    icon: profile.avatar,
+    icon: profile.logo || profile.avatar,
   },
   openGraph: {
     title: `${profile.name} | ${profile.role}`,
