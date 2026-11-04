@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
     /* ذخیره در دیتابیس؛ اگر در دسترس نبود، حالت پشتیبان (ایمیل) اجرا می‌شود */
     let stored = false;
     try {
+      if (!db) throw new Error("database unavailable in this environment");
       await db.contactMessage.create({
         data: { name, email, subject: subject || null, message },
       });
