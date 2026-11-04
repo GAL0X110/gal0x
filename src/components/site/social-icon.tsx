@@ -6,6 +6,7 @@ import {
   Send,
   Globe,
   Twitter,
+  Youtube,
   type LucideIcon,
 } from "lucide-react";
 import type { SocialKey } from "@/config/profile";
@@ -17,6 +18,7 @@ const ICONS: Record<SocialKey, LucideIcon> = {
   telegram: Send,
   email: Mail,
   twitter: Twitter,
+  youtube: Youtube,
   website: Globe,
 };
 
