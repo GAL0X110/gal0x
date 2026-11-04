@@ -20,6 +20,7 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(profile.siteUrl),
   title: `${profile.brand} | ${profile.name}`,
   description: profile.seoDescription,
   keywords: [
@@ -38,9 +39,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${profile.brand} | ${profile.name}`,
     description: profile.seoDescription,
+    url: profile.siteUrl,
     siteName: profile.brand,
     type: "website",
     locale: "fa_IR",
+    images: [{ url: profile.logo, width: 512, height: 512, alt: profile.brand }],
+  },
+  twitter: {
+    card: "summary",
+    title: `${profile.brand} | ${profile.name}`,
+    description: profile.seoDescription,
+    images: [profile.logo],
   },
 };
 

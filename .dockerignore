@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.gitignore
+.env
+.env.local
+db
+dev.log
+server.log
+*.log
+Dockerfile
+.dockerignore
+README.md
+agent-ctx
+.vscode
+.idea
