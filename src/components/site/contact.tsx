@@ -94,16 +94,30 @@ export function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      const data = (await res.json()) as { ok: boolean; error?: string };
+      const data = (await res.json()) as {
+        ok: boolean;
+        error?: string;
+        mailto?: string;
+      };
 
       if (!res.ok || !data.ok) {
         throw new Error(data.error ?? "خطا در ارسال پیام");
       }
 
-      toast({
-        title: "پیام شما ارسال شد ✅",
-        description: "به‌محض مشاهده پیام، با شما در ارتباط خواهم بود.",
-      });
+      /* اگر دیتابیس در دسترس نبود (هاست سرورلس)، پیام با ایمیل ارسال می‌شود */
+      if (data.mailto) {
+        window.location.href = data.mailto;
+        toast({
+          title: "ایمیل شما آماده شد ✉️",
+          description:
+            "پنجره‌ی ایمیل باز شده؛ فقط دکمه‌ی ارسال را بزنید تا پیام برسد.",
+        });
+      } else {
+        toast({
+          title: "پیام شما ارسال شد ✅",
+          description: "به‌محض مشاهده پیام، با شما در ارتباط خواهم بود.",
+        });
+      }
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       toast({

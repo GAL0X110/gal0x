@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
+import { profile } from "@/config/profile";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "نام باید حداقل ۲ کاراکتر باشد").max(80),
@@ -13,6 +14,24 @@ const contactSchema = z.object({
     .max(2000),
 });
 
+/**
+ * ساخت لینک mailto برای حالت پشتیبان؛
+ * روی هاست‌های سرورلس (مثل Vercel) که دیتابیس فایلی ندارند،
+ * پیام به‌جای ذخیره در دیتابیس با ایمیل به صندوق صاحب سایت می‌رسد.
+ */
+function buildMailto(
+  name: string,
+  email: string,
+  subject?: string,
+  message?: string
+) {
+  const body = [`نام: ${name}`, `ایمیل: ${email}`, "", message ?? ""].join("\n");
+  const mailSubject =
+    subject || `پیام جدید از سایت ${profile.brand} — ${name}`;
+
+  return `mailto:${profile.email}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(body)}`;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -22,7 +41,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           ok: false,
-          error: parsed.error.issues[0]?.message ?? "اطلاعات وارد شده معتبر نیستند.",
+          error:
+            parsed.error.issues[0]?.message ??
+            "اطلاعات وارد شده معتبر نیستند.",
         },
         { status: 400 }
       );
@@ -30,13 +51,32 @@ export async function POST(req: NextRequest) {
 
     const { name, email, subject, message } = parsed.data;
 
-    await db.contactMessage.create({
-      data: { name, email, subject: subject || null, message },
-    });
+    /* ذخیره در دیتابیس؛ اگر در دسترس نبود، حالت پشتیبان (ایمیل) اجرا می‌شود */
+    let stored = false;
+    try {
+      await db.contactMessage.create({
+        data: { name, email, subject: subject || null, message },
+      });
+      stored = true;
+    } catch (dbError) {
+      console.error(
+        "[POST /api/contact] DB unavailable — falling back to mailto:",
+        dbError
+      );
+    }
+
+    if (stored) {
+      return NextResponse.json({
+        ok: true,
+        message: "پیام شما با موفقیت ثبت شد.",
+      });
+    }
 
     return NextResponse.json({
       ok: true,
-      message: "پیام شما با موفقیت ثبت شد.",
+      delivered: "mailto",
+      mailto: buildMailto(name, email, subject, message),
+      message: "پیام شما از طریق ایمیل ارسال می‌شود.",
     });
   } catch (error) {
     console.error("[POST /api/contact]", error);
