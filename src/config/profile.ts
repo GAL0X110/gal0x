@@ -121,9 +121,13 @@ export const profile = {
   /* ─── شبکه‌های اجتماعی ─── */
   socials: [
     { name: "ایکس (توییتر)", icon: "twitter", href: "https://x.com/GALOX" },
-    { name: "یوتیوب", icon: "youtube", href: "https://youtube.com/@GALOX" },
+    {
+      name: "لینکدین",
+      icon: "linkedin",
+      href: "https://www.linkedin.com/in/mohammad-amin-shaker-ba9241434",
+    },
     { name: "گیت‌هاب", icon: "github", href: "https://github.com/GAL0X110" },
-    { name: "تلگرام", icon: "telegram", href: "https://t.me/GALOX" },
+    { name: "تلگرام", icon: "telegram", href: "https://t.me/GAL0XGAL0X" },
   ] as SocialLink[],
 
   /* ─── مهارت‌ها ─── */
