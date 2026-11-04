@@ -120,7 +120,7 @@ export const profile = {
   socials: [
     { name: "ایکس (توییتر)", icon: "twitter", href: "https://x.com/GALOX" },
     { name: "یوتیوب", icon: "youtube", href: "https://youtube.com/@GALOX" },
-    { name: "گیت‌هاب", icon: "github", href: "https://github.com/Gal0x" },
+    { name: "گیت‌هاب", icon: "github", href: "https://github.com/GAL0X110" },
     { name: "تلگرام", icon: "telegram", href: "https://t.me/GALOX" },
   ] as SocialLink[],
 
