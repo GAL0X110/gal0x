@@ -3,6 +3,7 @@
 import { FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useBrand } from "./brand-context";
 import { profile } from "@/config/profile";
 
 export function ResumeButton({
@@ -13,8 +14,10 @@ export function ResumeButton({
   label?: string;
 }) {
   const { toast } = useToast();
+  const { manifest } = useBrand();
+  const resumeUrl = (manifest?.resume ?? profile.resumeUrl) || "";
 
-  if (!profile.resumeUrl) {
+  if (!resumeUrl) {
     return (
       <Button
         variant="outline"
@@ -24,7 +27,7 @@ export function ResumeButton({
           toast({
             title: "رزومه هنوز آپلود نشده است",
             description:
-              "فایل رزومه‌ات را در پوشه public بگذارید و مسیرش را در فایل src/config/profile.ts وارد کنید.",
+              "از دکمه ⚙ پایین صفحه، پنل برند را باز کنید و فایل PDF رزومه را آپلود کنید.",
           })
         }
       >
@@ -36,7 +39,7 @@ export function ResumeButton({
 
   return (
     <Button asChild variant="outline" size="lg" className={className}>
-      <a href={profile.resumeUrl} download>
+      <a href={resumeUrl} download>
         <FileText className="size-4" aria-hidden="true" />
         {label}
       </a>

@@ -6,20 +6,25 @@ import { Projects } from "@/components/site/projects";
 import { Resume } from "@/components/site/resume";
 import { Contact } from "@/components/site/contact";
 import { Footer } from "@/components/site/footer";
+import { BrandProvider } from "@/components/site/brand-context";
+import { BrandSettings } from "@/components/site/brand-settings";
 
 export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Resume />
-        <Contact />
-      </main>
-      <Footer />
+      <BrandProvider>
+        <Navbar />
+        <main className="flex-1">
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Resume />
+          <Contact />
+        </main>
+        <Footer />
+        <BrandSettings />
+      </BrandProvider>
     </div>
   );
 }

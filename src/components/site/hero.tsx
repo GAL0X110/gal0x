@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useBrand } from "./brand-context";
 import { ResumeButton } from "./resume-button";
 import { SocialIcon } from "./social-icon";
 import { profile } from "@/config/profile";
@@ -40,6 +41,9 @@ function RotatingRole() {
 }
 
 export function Hero() {
+  const { manifest } = useBrand();
+  const avatarSrc = manifest?.avatar ?? profile.avatar;
+
   return (
     <section id="home" className="relative overflow-hidden">
       {/* پس‌زمینه تزئینی */}
@@ -135,11 +139,12 @@ export function Hero() {
           />
           <div className="relative rounded-full border-4 border-primary/25 bg-background p-2 shadow-xl">
             <Image
-              src={profile.avatar}
+              src={`${avatarSrc}?v=${manifest?.updatedAt ?? 0}`}
               alt={`عکس پروفایل ${profile.name}`}
               width={300}
               height={300}
               priority
+              unoptimized
               className="size-40 rounded-full object-cover sm:size-56 lg:size-72"
             />
           </div>
