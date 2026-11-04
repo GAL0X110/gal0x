@@ -20,6 +20,7 @@ export function Skills() {
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
+          index="02"
           badge="مهارت‌ها"
           title="مهارت‌ها و تخصص‌های من"
           description="فهرست مهارت‌ها و ابزارهایی که با آن‌ها کار می‌کنم. سطوح را می‌توانید از فایل کانفیگ تغییر دهید."

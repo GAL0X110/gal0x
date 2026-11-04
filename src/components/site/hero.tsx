@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useBrand } from "./brand-context";
 import { ResumeButton } from "./resume-button";
 import { SocialIcon } from "./social-icon";
+import { Starfield } from "./starfield";
 import { profile } from "@/config/profile";
 
 function RotatingRole() {
@@ -31,7 +32,7 @@ function RotatingRole() {
           aria-hidden="true"
           className="invisible col-start-1 row-start-1 whitespace-nowrap"
         >
-          {role}
+          #{role}
         </span>
       ))}
       <AnimatePresence mode="wait">
@@ -43,7 +44,7 @@ function RotatingRole() {
           transition={{ duration: 0.35, ease: "easeOut" }}
           className="col-start-1 row-start-1 whitespace-nowrap"
         >
-          {roles[index]}
+          #{roles[index]}
         </motion.span>
       </AnimatePresence>
     </span>
@@ -58,6 +59,7 @@ export function Hero() {
     <section id="home" className="relative overflow-hidden">
       {/* پس‌زمینه تزئینی */}
       <div className="bg-dots absolute inset-0" aria-hidden="true" />
+      <Starfield className="absolute inset-0" aria-hidden="true" />
       <div
         className="absolute -top-24 start-1/4 size-96 rounded-full bg-primary/15 blur-3xl"
         aria-hidden="true"
@@ -81,8 +83,7 @@ export function Hero() {
           </span>
 
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-            <span className="text-primary">#</span>
-            {profile.name.replace(/ /g, "_")}
+            {profile.name}
           </h1>
 
           <p className="mt-4 flex flex-wrap items-center justify-center gap-x-2 text-xl font-bold sm:text-2xl lg:justify-start">

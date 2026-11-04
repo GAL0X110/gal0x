@@ -103,6 +103,7 @@ export function Contact() {
     <section id="contact" className="scroll-mt-20 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
+          index="05"
           badge="تماس با من"
           title="بیایید در ارتباط باشیم"
           description="برای همکاری، سؤال یا حتی یک سلام ساده، از فرم زیر استفاده کنید. پیام شما مستقیماً برای من ارسال می‌شود."

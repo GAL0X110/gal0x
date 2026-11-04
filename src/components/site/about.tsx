@@ -24,6 +24,7 @@ export function About() {
     <section id="about" className="scroll-mt-20 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
+          index="01"
           badge="درباره من"
           title="کمی بیشتر با من آشنا شوید"
           description="در این بخش می‌توانید با من، علاقه‌مندی‌ها و مسیری که طی کرده‌ام آشنا شوید."

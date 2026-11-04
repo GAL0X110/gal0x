@@ -68,10 +68,17 @@ export function Navbar() {
         <a
           href="#home"
           className="flex items-center gap-2.5"
-          aria-label={`رفتن به بالای صفحه - ${profile.name}`}
+          aria-label={`رفتن به بالای صفحه - ${profile.brand}`}
         >
           <BrandMark />
-          <span className="text-lg font-bold">{profile.name}</span>
+          <span className="flex flex-col leading-none">
+            <span className="text-shine font-display text-base font-bold tracking-[0.3em]">
+              {profile.brand}
+            </span>
+            <span className="mt-1 hidden text-[9px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:block">
+              {profile.fullName}
+            </span>
+          </span>
         </a>
 
         {/* منوی دسکتاپ */}
@@ -116,7 +123,9 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="right" aria-describedby={undefined} className="w-72">
               <SheetHeader>
-                <SheetTitle className="text-start">{profile.name}</SheetTitle>
+                <SheetTitle className="text-start">
+                  <span className="font-display tracking-[0.3em]">{profile.brand}</span>
+                </SheetTitle>
               </SheetHeader>
               <Separator />
               <nav aria-label="ناوبری موبایل" className="px-4">

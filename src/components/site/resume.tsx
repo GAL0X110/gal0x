@@ -67,6 +67,7 @@ export function Resume() {
     >
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <SectionHeading
+          index="04"
           badge="رزومه"
           title="مسیر حرفه‌ای من"
           description="سوابق شغلی و تحصیلی من به‌صورت خلاصه. نسخه کامل رزومه را می‌توانید دانلود کنید."

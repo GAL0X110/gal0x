@@ -91,6 +91,7 @@ export function Projects() {
     <section id="projects" className="scroll-mt-20 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionHeading
+          index="03"
           badge="نمونه‌کارها"
           title="پروژه‌های من"
           description="مجموعه‌ای از پروژه‌هایی که روی آن‌ها کار کرده‌ام. هر زمان پروژه جدیدی داشته باشید، می‌توانید از فایل کانفیگ به سایت اضافه‌اش کنید."

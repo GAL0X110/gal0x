@@ -50,8 +50,12 @@ export function Footer() {
             <div className="flex items-center gap-2.5">
               <BrandMark />
               <div>
-                <p className="font-bold">{profile.name}</p>
-                <p className="text-xs text-muted-foreground">{profile.role}</p>
+                <p className="font-display text-sm font-bold tracking-[0.3em]">
+                  {profile.brand}
+                </p>
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-muted-foreground">
+                  {profile.fullName}
+                </p>
               </div>
             </div>
 
@@ -77,7 +81,8 @@ export function Footer() {
 
           <div className="flex flex-col items-center justify-between gap-3 text-center text-sm text-muted-foreground sm:flex-row sm:text-start">
             <p>
-              © {jalaliYear} {profile.name} — تمامی حقوق محفوظ است.
+              © {jalaliYear} {profile.brand} | {profile.name} — تمامی حقوق محفوظ
+              است.
             </p>
             <p className="flex items-center gap-1.5">
               ساخته‌شده با

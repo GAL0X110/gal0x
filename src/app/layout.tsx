@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
+import { Vazirmatn, Orbitron } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -11,11 +11,21 @@ const vazirmatn = Vazirmatn({
   display: "swap",
 });
 
+/** فونت نمایشی لاتین برای برند GALOX و اعداد بخش‌ها */
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
+  subsets: ["latin"],
+  weight: ["500", "700", "800", "900"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: `${profile.name} | ${profile.role}`,
+  title: `${profile.brand} | ${profile.name}`,
   description: profile.seoDescription,
   keywords: [
+    profile.brand,
     profile.name,
+    profile.fullName,
     "سایت شخصی",
     "رزومه آنلاین",
     profile.role,
@@ -26,9 +36,9 @@ export const metadata: Metadata = {
     icon: profile.logo || profile.avatar,
   },
   openGraph: {
-    title: `${profile.name} | ${profile.role}`,
+    title: `${profile.brand} | ${profile.name}`,
     description: profile.seoDescription,
-    siteName: profile.name,
+    siteName: profile.brand,
     type: "website",
     locale: "fa_IR",
   },
@@ -42,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body
-        className={`${vazirmatn.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${vazirmatn.variable} ${orbitron.variable} font-sans antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
