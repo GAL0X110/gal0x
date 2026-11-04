@@ -23,7 +23,17 @@ function RotatingRole() {
   }, [roles.length]);
 
   return (
-    <span className="relative inline-flex h-[1.5em] min-w-40 items-center overflow-hidden text-primary sm:min-w-52">
+    <span className="relative inline-grid h-[1.5em] place-items-center overflow-hidden text-primary">
+      {/* عبارت‌های نامرئی برای ثابت ماندن عرض باکس به اندازه‌ی بلندترین عبارت */}
+      {roles.map((role) => (
+        <span
+          key={role}
+          aria-hidden="true"
+          className="invisible col-start-1 row-start-1 whitespace-nowrap"
+        >
+          {role}
+        </span>
+      ))}
       <AnimatePresence mode="wait">
         <motion.span
           key={index}
@@ -31,7 +41,7 @@ function RotatingRole() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "-110%", opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="whitespace-nowrap"
+          className="col-start-1 row-start-1 whitespace-nowrap"
         >
           {roles[index]}
         </motion.span>
@@ -67,7 +77,7 @@ export function Hero() {
         >
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
             <Sparkles className="size-4" aria-hidden="true" />
-            👋 سلام، من هستم
+            سلام، من هستم
           </span>
 
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
