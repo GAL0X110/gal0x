@@ -11,7 +11,7 @@ const vazirmatn = Vazirmatn({
   display: "swap",
 });
 
-/** فونت نمایشی لاتین برای برند GALOX و اعداد بخش‌ها */
+/** فونت نمایشی لاتین برای برند GAL0X و اعداد بخش‌ها */
 const orbitron = Orbitron({
   variable: "--font-orbitron",
   subsets: ["latin"],
