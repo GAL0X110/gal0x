@@ -18,9 +18,29 @@ import { SectionHeading } from "./section-heading";
 import { SocialIcon } from "./social-icon";
 import { profile } from "@/config/profile";
 
-const CONTACT_INFO = [
-  { icon: Mail, label: "ایمیل", value: profile.email, ltr: true },
-  { icon: Phone, label: "تلفن", value: profile.phone, ltr: true },
+interface ContactInfoItem {
+  icon: typeof Mail;
+  label: string;
+  value: string;
+  ltr: boolean;
+  href?: string;
+}
+
+const CONTACT_INFO: ContactInfoItem[] = [
+  {
+    icon: Mail,
+    label: "ایمیل",
+    value: profile.email,
+    ltr: true,
+    href: `mailto:${profile.email}`,
+  },
+  {
+    icon: Phone,
+    label: "موبایل",
+    value: profile.phone,
+    ltr: true,
+    href: `tel:${profile.phone.replace(/\s+/g, "")}`,
+  },
   { icon: MapPin, label: "موقعیت", value: profile.location, ltr: false },
 ];
 
@@ -112,26 +132,43 @@ export function Contact() {
         <div className="grid gap-8 lg:grid-cols-5">
           {/* اطلاعات تماس */}
           <div className="space-y-4 lg:col-span-2">
-            {CONTACT_INFO.map((item) => (
-              <div
-                key={item.label}
-                className="flex items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
-              >
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                  <item.icon className="size-5" aria-hidden="true" />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground">{item.label}</p>
-                  <p
-                    className="truncate font-semibold"
-                    dir={item.ltr ? "ltr" : undefined}
-                    style={item.ltr ? { textAlign: "end" } : undefined}
-                  >
-                    {item.value}
-                  </p>
+            {CONTACT_INFO.map((item) => {
+              const content = (
+                <>
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <item.icon className="size-5" aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-xs text-muted-foreground">{item.label}</p>
+                    <p
+                      className="truncate font-semibold"
+                      dir={item.ltr ? "ltr" : undefined}
+                      style={item.ltr ? { textAlign: "end" } : undefined}
+                    >
+                      {item.value}
+                    </p>
+                  </div>
+                </>
+              );
+
+              return item.href ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  aria-label={`${item.label}: ${item.value}`}
+                  className="flex items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md"
+                >
+                  {content}
+                </a>
+              ) : (
+                <div
+                  key={item.label}
+                  className="flex items-center gap-4 rounded-2xl border bg-card p-4 shadow-sm transition-shadow hover:shadow-md"
+                >
+                  {content}
                 </div>
-              </div>
-            ))}
+              );
+            })}
 
             {/* شبکه‌های اجتماعی */}
             <div className="rounded-2xl border bg-card p-4 shadow-sm">

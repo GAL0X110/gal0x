@@ -79,7 +79,7 @@ export function Hero() {
         >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
             <Orbit className="size-4" aria-hidden="true" />
-            سلام، من
+            به کهکشان من خوش اومدید
           </span>
 
           {/* نام برند با فونت نمایشی کهکشانی */}

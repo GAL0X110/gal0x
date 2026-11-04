@@ -89,7 +89,7 @@ export const profile = {
 
   /* ─── تماس و وضعیت ─── */
   email: "gal0x.dev@gmail.com",
-  phone: "+98 912 000 0000",
+  phone: "+98 936 515 8896",
   location: "تهران، ایران",
   /** اگر آماده همکاری هستید true بگذارید تا نشان «آماده همکاری» نمایش داده شود */
   available: true,
