@@ -28,7 +28,9 @@ export default function Home() {
           <Contact />
         </main>
         <Footer />
-        <BrandSettings />
+        {/* پنل آپلود برند فقط در حالت توسعه (لوکال) نمایش داده می‌شود؛
+            در سایت زنده (پروداکشن) هرگز رندر نمی‌شود */}
+        {process.env.NODE_ENV === "development" ? <BrandSettings /> : null}
       </BrandProvider>
     </div>
   );
