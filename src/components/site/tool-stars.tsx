@@ -1,12 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { Sparkle } from "lucide-react";
 import { profile } from "@/config/profile";
 
 /**
  * ستاره‌های طلایی پراکنده در کهکشان صفحه‌ی اول؛
  * جایگزین نوار متحرک ابزارها — هر ستاره یک ابزار است که
- * با هاور (یا فوکوس/لمس) نامش را نشان می‌دهد.
+ * با هاور موس، فوکوس کیبورد یا لمس/کلیک، نامش را نشان می‌دهد.
  *
  * هر ستاره یک لنگر صفر-اندازه است؛ آیکون و برچسب هر دو
  * حول همان نقطه با translate فیزیکی وسط‌چین می‌شوند.
@@ -20,17 +21,20 @@ const TOOL_STAR_POSITIONS = [
   { x: "5%", y: "40%", sm: false },
   { x: "96%", y: "72%", sm: false },
   { x: "9%", y: "82%", sm: false },
-  { x: "52%", y: "95%", sm: true },
+  { x: "34%", y: "96%", sm: true },
   { x: "86%", y: "90%", sm: false },
 ] as const;
 
 export function ToolStars() {
   const tools = profile.tools;
+  const [hovered, setHovered] = useState<string | null>(null);
+  const [pinned, setPinned] = useState<string | null>(null);
 
   return (
     <div className="pointer-events-none absolute inset-0 z-20">
       {tools.map((tool, i) => {
         const pos = TOOL_STAR_POSITIONS[i % TOOL_STAR_POSITIONS.length];
+        const isActive = hovered === tool || pinned === tool;
 
         return (
           <div
@@ -46,9 +50,16 @@ export function ToolStars() {
                 animationDelay: `${i * 0.45}s`,
                 animationDuration: `${2.6 + (i % 3) * 0.8}s`,
               }}
+              onMouseEnter={() => setHovered(tool)}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered(tool)}
+              onBlur={() => setHovered(null)}
+              onClick={() => setPinned((p) => (p === tool ? null : tool))}
             >
               <Sparkle
-                className="size-3.5 fill-primary text-primary drop-shadow-[0_0_7px_rgba(234,179,8,0.9)] transition-transform duration-200 group-hover:scale-150"
+                className={`size-3.5 fill-primary text-primary drop-shadow-[0_0_7px_rgba(234,179,8,0.9)] transition-transform duration-200 ${
+                  isActive ? "scale-150" : "scale-100"
+                }`}
                 aria-hidden="true"
               />
             </button>
@@ -56,7 +67,9 @@ export function ToolStars() {
             {/* برچسب نام ابزار — بالای ستاره، وسط‌چین */}
             <span
               dir="ltr"
-              className="pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-lg border border-primary/30 bg-card px-2.5 py-1 font-display text-xs font-semibold tracking-widest text-foreground opacity-0 shadow-lg transition-all duration-200 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100"
+              className={`pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-lg border border-primary/30 bg-card px-2.5 py-1 font-display text-xs font-semibold tracking-widest text-foreground shadow-lg transition-all duration-200 ${
+                isActive ? "opacity-100" : "opacity-0"
+              }`}
             >
               {tool}
             </span>
