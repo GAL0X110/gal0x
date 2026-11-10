@@ -23,13 +23,7 @@ export function ResumeButton({
         variant="outline"
         size="lg"
         className={className}
-        onClick={() =>
-          toast({
-            title: "رزومه هنوز آپلود نشده است",
-            description:
-              "از دکمه ⚙ پایین صفحه، پنل برند را باز کنید و فایل PDF رزومه را آپلود کنید.",
-          })
-        }
+        onClick={() => toast({ title: "رزومه هنوز آپلود نشده" })}
       >
         <FileText className="size-4" aria-hidden="true" />
         {label}

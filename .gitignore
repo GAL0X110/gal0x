@@ -54,3 +54,8 @@ server.log
 /skills/
 # database (local sqlite)
 /db
+
+# sandbox system folders
+/download
+/skills
+/upload

@@ -202,17 +202,20 @@
   }
 }
 
-/* ─── نوار متحرک ابزارها ─── */
-@keyframes marquee {
-  from {
-    transform: translateX(0);
+/* ─── چشمک‌زدن ستاره‌های ابزار (پراکنده در هیرو) ─── */
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.8);
   }
-  to {
-    transform: translateX(-50%);
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
   }
 }
-.animate-marquee {
-  animation: marquee 30s linear infinite;
+.star-twinkle {
+  animation: star-twinkle 3.2s ease-in-out infinite;
 }
 
 /* ─── بافت نویز ظریف روی کل صفحه ─── */
@@ -243,10 +246,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .text-shine,
-  .animate-marquee,
+  .star-twinkle,
   .spin-galaxy,
   .orbit-ring,
   .orbit-reverse {
     animation: none;
   }
 }
+
+/* toc */

@@ -9,6 +9,7 @@ import { useBrand } from "./brand-context";
 import { ResumeButton } from "./resume-button";
 import { SocialIcon } from "./social-icon";
 import { Starfield } from "./starfield";
+import { ToolStars } from "./tool-stars";
 import { profile } from "@/config/profile";
 
 function RotatingRole() {
@@ -60,6 +61,8 @@ export function Hero() {
       {/* پس‌زمینه تزئینی */}
       <div className="bg-dots absolute inset-0" aria-hidden="true" />
       <Starfield className="absolute inset-0" aria-hidden="true" />
+      {/* ستاره‌های ابزار؛ با هاور، نام ابزار نشان داده می‌شود */}
+      <ToolStars />
       <div
         className="absolute -top-24 start-1/4 size-96 rounded-full bg-primary/15 blur-3xl"
         aria-hidden="true"
@@ -207,12 +210,12 @@ export function Hero() {
             />
           </div>
 
-          {/* کارت شناور: آماده همکاری */}
+          {/* کارت شناور: آماده همکاری — زیر قاب عکس، بدون پوشاندن عکس */}
           {profile.available ? (
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="absolute -bottom-3 start-0 z-10 flex items-center gap-2 rounded-2xl border bg-card px-4 py-2.5 shadow-lg sm:-start-6"
+              className="absolute -bottom-14 start-0 z-10 flex items-center gap-2 rounded-2xl border bg-card px-4 py-2.5 shadow-lg"
             >
               <span className="relative flex size-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-60" />
@@ -221,20 +224,6 @@ export function Hero() {
               <span className="text-sm font-semibold">آماده همکاری</span>
             </motion.div>
           ) : null}
-
-          {/* کارت شناور: نقش */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{
-              repeat: Infinity,
-              duration: 5,
-              ease: "easeInOut",
-              delay: 0.6,
-            }}
-            className="absolute -top-3 end-0 z-10 rounded-2xl border bg-card px-4 py-2.5 shadow-lg sm:-end-6"
-          >
-            <p className="text-sm font-semibold">{profile.role}</p>
-          </motion.div>
         </motion.div>
       </div>
     </section>
