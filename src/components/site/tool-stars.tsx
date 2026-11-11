@@ -1,53 +1,118 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { profile } from "@/config/profile";
 
 /**
  * ستاره‌های درخشانِ ابزارها — جایگزین نوار متحرک ابزارها؛
- * مثل ستاره‌های کم‌رنگ پس‌زمینه، کاملاً پراکنده و دور تا دورِ عکس
- * (بعضی‌ها خیلی دور، حتی وسط صفحه)؛ با هاور موس، فوکوس کیبورد یا
- * لمس/کلیک، نام ابزار نشان داده می‌شود.
+ * دقیقاً مثل ستاره‌های کم‌رنگ پس‌زمینه، کاملاً پراکنده و رندوم:
+ * موقعیت هر ستاره در هر بارگذاری، تصادفی ساخته می‌شود.
+ * با هاور موس، فوکوس کیبورد یا لمس/کلیک، نام ابزار نشان داده می‌شود.
+ *
+ * نمونه‌گیری پس‌زنی (rejection sampling) تضمین می‌کند که هیچ ستاره‌ای
+ * روی خودِ عکس و حلقه‌های مداری‌اش، روی کارت «آماده همکاری» یا
+ * روی ستاره‌ی دیگری نیفتد.
  *
  * هر ستاره یک لنگر صفر-اندازه است؛ نقطه‌ی درخشان و برچسب هر دو
  * حول همان نقطه با translate فیزیکی وسط‌چین می‌شوند.
- * چیدمان دسکتاپ و موبایل جداگانه تنظیم شده چون فضای اطراف عکس فرق دارد.
+ * چیدمان دسکتاپ و موبایل جدا محاسبه می‌شود چون فضای اطراف عکس فرق دارد.
  */
 
-/** دسکتاپ: پخش در کل فضای اطراف — حتی وسطِ فاصله‌ی عکس و متن */
-const DESKTOP_POSITIONS = [
-  { x: "-10%", y: "-38%" },
-  { x: "18%", y: "-44%" },
-  { x: "58%", y: "-42%" },
-  { x: "126%", y: "-30%" },
-  { x: "142%", y: "14%" },
-  { x: "118%", y: "62%" },
-  { x: "150%", y: "88%" },
-  { x: "-8%", y: "78%" },
-] as const;
-
-/** موبایل: پخش در عرض و پایینِ عکس؛ بالای عکس جا برای پخش نیست */
-const MOBILE_POSITIONS = [
-  { x: "-40%", y: "18%" },
-  { x: "-30%", y: "-10%" },
-  { x: "20%", y: "-10%" },
-  { x: "88%", y: "-8%" },
-  { x: "138%", y: "26%" },
-  { x: "112%", y: "70%" },
-  { x: "0%", y: "90%" },
-  { x: "-28%", y: "96%" },
-] as const;
-
 type StarPosition = { x: string; y: string };
+
+/** محدوده‌ی مجاز پخش (درصد نسبت به قاب عکس) + قوانین اجتناب */
+interface ScatterBounds {
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+  /** حداقل فاصله از مرکز قاب عکس — تا روی عکس و حلقه‌های مداری نیفتد */
+  minRadius: number;
+  /** حداقل فاصله‌ی بین خود ستاره‌ها */
+  minGap: number;
+  /** ناحیه‌ی کارت «آماده همکاری» (زیر عکس، سمت راست) */
+  card: { xMin: number; xMax: number; yMin: number; yMax: number };
+}
+
+/** دسکتاپ: کل فضای اطراف عکس، حتی وسطِ فاصله‌ی عکس و متن */
+const DESKTOP_BOUNDS: ScatterBounds = {
+  xMin: -16,
+  xMax: 170,
+  yMin: -52,
+  yMax: 150,
+  minRadius: 66,
+  minGap: 16,
+  card: { xMin: 44, xMax: 108, yMin: 100, yMax: 124 },
+};
+
+/** موبایل: پهلوها و پایینِ عکس (بالای عکس، بلوک آمار است) */
+const MOBILE_BOUNDS: ScatterBounds = {
+  xMin: -40,
+  xMax: 140,
+  yMin: -10,
+  yMax: 150,
+  minRadius: 70,
+  minGap: 16,
+  card: { xMin: 13, xMax: 106, yMin: 104, yMax: 136 },
+};
+
+/** پخش رندوم؛ اگر جا تنگ شد، حداقل فاصله‌ی بین ستاره‌ها آرام شل می‌شود */
+function scatterStars(bounds: ScatterBounds, count: number): StarPosition[] {
+  const points: { x: number; y: number }[] = [];
+  let gap = bounds.minGap;
+
+  while (points.length < count && gap >= 0) {
+    for (let attempt = 0; attempt < 400 && points.length < count; attempt++) {
+      const x = bounds.xMin + Math.random() * (bounds.xMax - bounds.xMin);
+      const y = bounds.yMin + Math.random() * (bounds.yMax - bounds.yMin);
+
+      // نه روی عکس و حلقه‌های مداری‌اش
+      if (Math.hypot(x - 50, y - 50) < bounds.minRadius) continue;
+
+      // نه روی کارت «آماده همکاری»
+      const { card } = bounds;
+      if (x > card.xMin && x < card.xMax && y > card.yMin && y < card.yMax) {
+        continue;
+      }
+
+      // نه روی ستاره‌ی دیگر
+      if (points.some((p) => Math.hypot(p.x - x, p.y - y) < gap)) continue;
+
+      points.push({ x, y });
+    }
+    gap -= 4;
+  }
+
+  // پشتیبان: عملاً هرگز رخ نمی‌دهد
+  while (points.length < count) {
+    points.push({
+      x: bounds.xMin + Math.random() * (bounds.xMax - bounds.xMin),
+      y: bounds.yMin + Math.random() * (bounds.yMax - bounds.yMin),
+    });
+  }
+
+  return points.map((p) => ({ x: `${Math.round(p.x)}%`, y: `${Math.round(p.y)}%` }));
+}
 
 export function ToolStars() {
   const tools = profile.tools;
   const [hovered, setHovered] = useState<string | null>(null);
   const [pinned, setPinned] = useState<string | null>(null);
+  const [desktopPos, setDesktopPos] = useState<StarPosition[]>([]);
+  const [mobilePos, setMobilePos] = useState<StarPosition[]>([]);
 
-  const renderStars = (positions: readonly StarPosition[]) =>
-    tools.map((tool, i) => {
-      const pos = positions[i % positions.length];
+  // موقعیت‌ها در مرورگر و به‌صورت رندوم ساخته می‌شوند — مثل ستاره‌های پس‌زمینه
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setDesktopPos(scatterStars(DESKTOP_BOUNDS, tools.length));
+      setMobilePos(scatterStars(MOBILE_BOUNDS, tools.length));
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [tools.length]);
+
+  const renderStars = (positions: StarPosition[]) =>
+    positions.map((pos, i) => {
+      const tool = tools[i % tools.length];
       const isActive = hovered === tool || pinned === tool;
 
       return (
@@ -96,13 +161,13 @@ export function ToolStars() {
 
   return (
     <div className="pointer-events-none absolute inset-0 z-20">
-      {/* چیدمان دسکتاپ */}
+      {/* پخش رندوم دسکتاپ */}
       <div className="absolute inset-0 hidden lg:block">
-        {renderStars(DESKTOP_POSITIONS)}
+        {desktopPos.length === tools.length ? renderStars(desktopPos) : null}
       </div>
-      {/* چیدمان موبایل و تبلت */}
+      {/* پخش رندوم موبایل و تبلت */}
       <div className="absolute inset-0 lg:hidden">
-        {renderStars(MOBILE_POSITIONS)}
+        {mobilePos.length === tools.length ? renderStars(mobilePos) : null}
       </div>
     </div>
   );
