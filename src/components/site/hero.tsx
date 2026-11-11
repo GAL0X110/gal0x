@@ -61,8 +61,6 @@ export function Hero() {
       {/* پس‌زمینه تزئینی */}
       <div className="bg-dots absolute inset-0" aria-hidden="true" />
       <Starfield className="absolute inset-0" aria-hidden="true" />
-      {/* ستاره‌های ابزار؛ با هاور، نام ابزار نشان داده می‌شود */}
-      <ToolStars />
       <div
         className="absolute -top-24 start-1/4 size-96 rounded-full bg-primary/15 blur-3xl"
         aria-hidden="true"
@@ -224,6 +222,9 @@ export function Hero() {
               <span className="text-sm font-semibold">آماده همکاری</span>
             </motion.div>
           ) : null}
+
+          {/* ستاره‌های ابزار؛ در مدار دور قاب عکس — با هاور/لمس، نام ابزار نشان داده می‌شود */}
+          <ToolStars />
         </motion.div>
       </div>
     </section>

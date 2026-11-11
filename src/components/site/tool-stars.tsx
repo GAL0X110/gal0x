@@ -1,28 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkle } from "lucide-react";
 import { profile } from "@/config/profile";
 
 /**
- * ستاره‌های طلایی پراکنده در کهکشان صفحه‌ی اول؛
+ * ستاره‌های درخشانِ دورِ قاب کهکشانی عکس؛
  * جایگزین نوار متحرک ابزارها — هر ستاره یک ابزار است که
  * با هاور موس، فوکوس کیبورد یا لمس/کلیک، نامش را نشان می‌دهد.
  *
- * هر ستاره یک لنگر صفر-اندازه است؛ آیکون و برچسب هر دو
+ * هر ستاره یک لنگر صفر-اندازه است؛ نقطه‌ی درخشان و برچسب هر دو
  * حول همان نقطه با translate فیزیکی وسط‌چین می‌شوند.
  */
 
-/** موقعیت ثابت ستاره‌ها (درصدی، دور از متن اصلی)؛ sm یعنی در موبایل هم دیده شود */
+/** موقعیت ثابت ستاره‌ها (درصدی نسبت به قاب عکس، مثل مدار دور سیاره) */
 const TOOL_STAR_POSITIONS = [
-  { x: "20%", y: "10%", sm: true },
-  { x: "79%", y: "9%", sm: true },
-  { x: "94%", y: "34%", sm: false },
-  { x: "5%", y: "40%", sm: false },
-  { x: "96%", y: "72%", sm: false },
-  { x: "9%", y: "82%", sm: false },
-  { x: "34%", y: "96%", sm: true },
-  { x: "86%", y: "90%", sm: false },
+  { x: "63%", y: "-7%" },
+  { x: "90%", y: "16%" },
+  { x: "105%", y: "50%" },
+  { x: "90%", y: "86%" },
+  { x: "10%", y: "86%" },
+  { x: "-5%", y: "50%" },
+  { x: "10%", y: "14%" },
+  { x: "36%", y: "-7%" },
 ] as const;
 
 export function ToolStars() {
@@ -39,7 +38,7 @@ export function ToolStars() {
         return (
           <div
             key={tool}
-            className={`group absolute size-0 ${pos.sm ? "" : "hidden lg:block"}`}
+            className="group absolute size-0"
             style={{ left: pos.x, top: pos.y }}
           >
             <button
@@ -56,9 +55,12 @@ export function ToolStars() {
               onBlur={() => setHovered(null)}
               onClick={() => setPinned((p) => (p === tool ? null : tool))}
             >
-              <Sparkle
-                className={`size-3.5 fill-primary text-primary drop-shadow-[0_0_7px_rgba(234,179,8,0.9)] transition-transform duration-200 ${
-                  isActive ? "scale-150" : "scale-100"
+              {/* ستاره‌ی دایره‌ای درخشان — هم‌خانواده‌ی ستاره‌های پس‌زمینه، ولی پرنورتر */}
+              <span
+                className={`block size-2 rounded-full bg-primary transition-all duration-200 ${
+                  isActive
+                    ? "scale-150 shadow-[0_0_10px_4px_rgba(234,179,8,0.9),0_0_30px_12px_rgba(234,179,8,0.45)]"
+                    : "scale-100 shadow-[0_0_8px_3px_rgba(234,179,8,0.7),0_0_22px_8px_rgba(234,179,8,0.3)]"
                 }`}
                 aria-hidden="true"
               />
@@ -67,7 +69,7 @@ export function ToolStars() {
             {/* برچسب نام ابزار — بالای ستاره، وسط‌چین */}
             <span
               dir="ltr"
-              className={`pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 whitespace-nowrap rounded-lg border border-primary/30 bg-card px-2.5 py-1 font-display text-xs font-semibold tracking-widest text-foreground shadow-lg transition-all duration-200 ${
+              className={`pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-primary/30 bg-card px-2.5 py-1 font-display text-xs font-semibold tracking-widest text-foreground shadow-lg transition-all duration-200 ${
                 isActive ? "opacity-100" : "opacity-0"
               }`}
             >
