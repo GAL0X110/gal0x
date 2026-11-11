@@ -45,12 +45,12 @@ const DESKTOP_BOUNDS: ScatterBounds = {
   card: { xMin: 44, xMax: 108, yMin: 100, yMax: 124 },
 };
 
-/** موبایل: پهلوها و پایینِ عکس (بالای عکس، بلوک آمار است) */
+/** موبایل: پهلوها و کمی پایین‌ترِ عکس؛ نه زیر بلوک آمار، نه زیر لبه‌ی پایان hero */
 const MOBILE_BOUNDS: ScatterBounds = {
-  xMin: -40,
-  xMax: 140,
+  xMin: -44,
+  xMax: 144,
   yMin: -10,
-  yMax: 150,
+  yMax: 126,
   minRadius: 70,
   minGap: 16,
   card: { xMin: 13, xMax: 106, yMin: 104, yMax: 136 },

@@ -70,6 +70,16 @@ export function Hero() {
         aria-hidden="true"
       />
 
+      {/* گذار نرم پس‌زمینه به بخش بعدی — محو تدریجی نقاط و درخشش، بدون تغییر ناگهانی رنگ */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-background sm:h-36"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent"
+      />
+
       <div className="relative mx-auto flex min-h-svh max-w-6xl flex-col items-center justify-center gap-12 px-4 pb-16 pt-28 sm:px-6 lg:flex-row lg:justify-between lg:gap-8">
         {/* متن معرفی */}
         <motion.div
